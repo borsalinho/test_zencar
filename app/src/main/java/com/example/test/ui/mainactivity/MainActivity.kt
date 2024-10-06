@@ -1,9 +1,9 @@
-package com.example.test
+package com.example.test.ui.mainactivity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.test.ui.MainScreen
+import com.example.test.ui.composes.MainScreen
 import com.example.test.ui.theme.TestTheme
 
 class MainActivity : ComponentActivity() {

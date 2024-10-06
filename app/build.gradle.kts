@@ -44,6 +44,7 @@ dependencies {
 
     implementation(libs.androidx.room)
     kapt(libs.androidx.room.kapt)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

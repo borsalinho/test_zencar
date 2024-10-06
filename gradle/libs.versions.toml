@@ -10,10 +10,12 @@ activityCompose = "1.8.0"
 composeBom = "2024.04.01"
 roomVersion ="2.6.1"
 composeVersion ="2.0.0"
+vmComposeVersion = "2.5.0"
 
 [libraries]
 androidx-room = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
 androidx-room-kapt = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
+androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "vmComposeVersion" }
 
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

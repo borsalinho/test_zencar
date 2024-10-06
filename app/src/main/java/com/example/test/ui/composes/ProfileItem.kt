@@ -1,6 +1,5 @@
-package com.example.test.ui
+package com.example.test.ui.composes
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -19,12 +17,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.test.data.ProfileEntity
 
 @Composable
 fun ProfileItem(
-    name: String,
-//    soname: String,
-//    bday: String
+    profile: ProfileEntity,
+    onClick: (ProfileEntity) -> Unit
 ){
     Card(
         modifier = Modifier
@@ -44,7 +42,7 @@ fun ProfileItem(
                 Column(
                     modifier = Modifier.padding(10.dp)
                 ){
-                    Text(text = name)
+                    Text(text = profile.name)
 //                    Text(text = soname)
 //                    Text(text = bday)
                 }
@@ -52,7 +50,9 @@ fun ProfileItem(
                     modifier = Modifier.padding(10.dp)
                 ){
                     IconButton(
-                        onClick = { Log.d("MyLog", "Удалено")}
+                        onClick = {
+                            onClick(profile)
+                        }
                     ) {
                         Icon(
                             imageVector = Icons.Default.Delete,
