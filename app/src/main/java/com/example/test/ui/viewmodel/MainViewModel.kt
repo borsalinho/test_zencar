@@ -33,6 +33,9 @@ class MainViewModel(
     val newProfilePassword = mutableStateOf("")
     val newProfileBDay = mutableStateOf("")
 
+    val login =  mutableStateOf("")
+    val loginPassword =  mutableStateOf("")
+
 
     fun insertProfile() = viewModelScope.launch {
         val newProfile = ProfileEntity(

@@ -18,13 +18,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.test.ui.viewmodel.MainViewModel
 
-
 @Composable
-fun RegistrationScreen(
+fun LoginScreen(
     mainViewModel: MainViewModel = viewModel(factory = MainViewModel.factory),
-    onSwitchToLogin: () -> Unit
-) {
-
+    onSwitchToRegistration: () -> Unit
+){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -34,43 +32,33 @@ fun RegistrationScreen(
 
     ) {
         TextField(
-            value = mainViewModel.newProfileName.value,
+            value = mainViewModel.login.value,
             onValueChange = {
-                mainViewModel.newProfileName.value = it
+                mainViewModel.login.value = it
             },
             label = {
-                Text(text = "Name")
+                Text(text = "Login")
             }
         )
         TextField(
-            value = mainViewModel.newProfilePassword.value,
+            value = mainViewModel.loginPassword.value,
             onValueChange = {
-                mainViewModel.newProfilePassword.value = it
+                mainViewModel.loginPassword.value = it
             },
             label = {
                 Text(text = "Password")
             }
         )
-        TextField(
-            value = mainViewModel.newProfileBDay.value,
-            onValueChange = {
-                mainViewModel.newProfileBDay.value = it
-            },
-            label = {
-                Text(text = "Name...")
-            }
-        )
         Spacer(modifier = Modifier.padding(10.dp))
         Button(
             onClick = {
-                mainViewModel.insertProfile()
+
             }
         ) {
-            Text(text = "Зарегистрироваться")
+            Text(text = "Войти")
         }
-        TextButton(onClick = onSwitchToLogin) {
-            Text(text = "Уже есть аккаунт? Войти")
+        TextButton(onClick = onSwitchToRegistration) {
+            Text(text = "Зарегистрироваться")
         }
     }
 }
-
