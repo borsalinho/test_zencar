@@ -26,23 +26,22 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         userPreferences = UserPreferences(this)
-        val isLoggedIn = userPreferences.isLoggedIn
         
         setContent {
             TestTheme{
+                var isLoggedIn by remember { mutableStateOf(userPreferences.isLoggedIn) }
                 var isRegistrationScreen by remember { mutableStateOf(false) }
-                var toLogin by remember { mutableStateOf(false) }
 
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    if (isLoggedIn || toLogin) {
+                    if (isLoggedIn) {
                         ProfilesScreen(
                             onLogout = {
                                 userPreferences.isLoggedIn = false
-                                toLogin = false
+                                isLoggedIn = false
                             }
                         )
                     } else {
@@ -53,7 +52,7 @@ class MainActivity : ComponentActivity() {
                             false -> LoginScreen(
                                 onSwitchToRegistration = { isRegistrationScreen = true },
                                 onLoginSuccess = {
-                                    toLogin = true
+                                    isLoggedIn = true
                                     userPreferences.isLoggedIn = true
                                 }
                             )
