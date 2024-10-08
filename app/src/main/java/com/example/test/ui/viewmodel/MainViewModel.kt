@@ -7,10 +7,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.test.app.MyApp
-import com.example.test.data.ProfileDb
-import com.example.test.data.ProfileEntity
+import com.example.test.myapp.MyApp
+import com.example.test.data.storage.ProfileDb
+import com.example.test.data.storage.ProfileEntity
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -30,20 +29,30 @@ class MainViewModel(
     }
 
     val profileList = profileDb.profileDao.getAllProfiles()
-    val newName = mutableStateOf("")
+    val newProfileName = mutableStateOf("")
+    val newProfilePassword = mutableStateOf("")
+    val newProfileBDay = mutableStateOf("")
 
 
     fun insertProfile() = viewModelScope.launch {
-        val newProfile = ProfileEntity(name = newName.value)
+        val newProfile = ProfileEntity(
+            userName = newProfileName.value,
+            userPassword = newProfilePassword.value,
+            userBDay = newProfileBDay.value
+        )
         profileDb.profileDao.insertProfile(newProfile)
-        newName.value = ""
-        Log.d("MyLog", "Добавлено  ${newProfile.name}")
+        CleanValues()
+        Log.d("MyLog", "Добавлено  ${newProfile.userName}")
     }
 
     fun deleteProfile(profileEntity: ProfileEntity) = viewModelScope.launch {
         profileDb.profileDao.deleteProfile(profileEntity)
-        Log.d("MyLog", "Удалено  ${profileEntity.name}")
+        Log.d("MyLog", "Удалено  ${profileEntity.userName}")
     }
 
-
+    private fun CleanValues(){
+        newProfileName.value = ""
+        newProfilePassword.value = ""
+        newProfileBDay.value = ""
+    }
 }

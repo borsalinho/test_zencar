@@ -1,4 +1,4 @@
-package com.example.test.data
+package com.example.test.data.storage
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -7,5 +7,7 @@ import androidx.room.PrimaryKey
 data class ProfileEntity (
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
-    val name : String
+    val userName : String,
+    val userPassword : String,
+    val userBDay : String
 )

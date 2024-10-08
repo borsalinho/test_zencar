@@ -1,7 +1,7 @@
-package com.example.test.app
+package com.example.test.myapp
 
 import android.app.Application
-import com.example.test.data.ProfileDb
+import com.example.test.data.storage.ProfileDb
 
 class MyApp : Application() {
     val database by lazy {

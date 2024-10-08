@@ -3,7 +3,7 @@ package com.example.test.ui.mainactivity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.test.ui.composes.MainScreen
+import com.example.test.ui.composes.RegistrationScreen
 import com.example.test.ui.theme.TestTheme
 
 class MainActivity : ComponentActivity() {
@@ -11,7 +11,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TestTheme{
-                MainScreen()
+                RegistrationScreen()
             }
         }
     }

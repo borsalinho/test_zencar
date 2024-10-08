@@ -17,7 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.test.data.ProfileEntity
+import com.example.test.data.storage.ProfileEntity
 
 @Composable
 fun ProfileItem(
@@ -42,9 +42,8 @@ fun ProfileItem(
                 Column(
                     modifier = Modifier.padding(10.dp)
                 ){
-                    Text(text = profile.name)
-//                    Text(text = soname)
-//                    Text(text = bday)
+                    Text(text = profile.userName)
+                    Text(text = profile.userBDay)
                 }
                 Column(
                     modifier = Modifier.padding(10.dp)
