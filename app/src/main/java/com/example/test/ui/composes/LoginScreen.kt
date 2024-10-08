@@ -1,5 +1,6 @@
 package com.example.test.ui.composes
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,7 +22,8 @@ import com.example.test.ui.viewmodel.MainViewModel
 @Composable
 fun LoginScreen(
     mainViewModel: MainViewModel = viewModel(factory = MainViewModel.factory),
-    onSwitchToRegistration: () -> Unit
+    onSwitchToRegistration: () -> Unit,
+    onLoginSuccess: () -> Unit
 ){
     Column(
         modifier = Modifier
@@ -52,7 +54,13 @@ fun LoginScreen(
         Spacer(modifier = Modifier.padding(10.dp))
         Button(
             onClick = {
-
+                mainViewModel.isProfileExists(mainViewModel.login.value, mainViewModel.loginPassword.value) { exists ->
+                    if (exists) {
+                        onLoginSuccess()
+                    } else {
+                        Log.d("LoginError", "Неверный логин или пароль")
+                    }
+                }
             }
         ) {
             Text(text = "Войти")

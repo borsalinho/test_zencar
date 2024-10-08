@@ -36,16 +36,27 @@ class MainViewModel(
     val login =  mutableStateOf("")
     val loginPassword =  mutableStateOf("")
 
+    fun isProfileExists(username: String, password: String, onResult: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val exists = profileDb.profileDao.checkProfile(username, password)
+            onResult(exists)
+        }
+    }
+
 
     fun insertProfile() = viewModelScope.launch {
-        val newProfile = ProfileEntity(
-            userName = newProfileName.value,
-            userPassword = newProfilePassword.value,
-            userBDay = newProfileBDay.value
-        )
-        profileDb.profileDao.insertProfile(newProfile)
-        CleanValues()
-        Log.d("MyLog", "Добавлено  ${newProfile.userName}")
+        try {
+            val newProfile = ProfileEntity(
+                userName = newProfileName.value,
+                userPassword = newProfilePassword.value,
+                userBDay = newProfileBDay.value
+            )
+            profileDb.profileDao.insertProfile(newProfile)
+            CleanValues()
+            Log.d("MyLog", "Добавлено  ${newProfile.userName}")
+        } catch (e: Exception) {
+            Log.e("Error", "Ошибка при добавлении профиля: ${e.message}")
+        }
     }
 
     fun deleteProfile(profileEntity: ProfileEntity) = viewModelScope.launch {

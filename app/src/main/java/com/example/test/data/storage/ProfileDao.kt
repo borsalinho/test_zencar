@@ -15,6 +15,9 @@ interface ProfileDao {
     @Delete
     suspend fun deleteProfile(profileEntity: ProfileEntity)
 
+    @Query("SELECT EXISTS(SELECT 1 FROM profile_table WHERE userName = :userName AND userPassword = :userPassword)")
+    suspend fun checkProfile(userName: String, userPassword: String): Boolean
+
     @Query("select * from profile_table")
     fun getAllProfiles() : Flow<List<ProfileEntity>>
 }
