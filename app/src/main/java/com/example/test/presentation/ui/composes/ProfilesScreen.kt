@@ -23,8 +23,10 @@ fun ProfilesScreen(
     val state by viewModel.state.collectAsState()
 
     Column {
-        Button(onClick = { onLogout() }) {
-            Text(text = "Logout")
+        Button(onClick = {
+            viewModel.handleIntent(ProfileUIIntent.Logout)
+        }) {
+            Text(text = "Выход")
         }
 
         if (state.isLoading) {

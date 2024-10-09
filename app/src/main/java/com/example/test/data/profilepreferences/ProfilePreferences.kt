@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class ProfilePreferences(context: Context) {
-
     private val prefs: SharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
 
     var isLoggedIn: Boolean
@@ -12,5 +11,4 @@ class ProfilePreferences(context: Context) {
         set(value) {
             prefs.edit().putBoolean("is_logged_in", value).apply()
         }
-
 }

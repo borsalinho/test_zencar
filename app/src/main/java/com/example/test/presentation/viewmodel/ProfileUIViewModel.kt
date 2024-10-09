@@ -1,5 +1,6 @@
 package com.example.test.presentation.viewmodel
 
+import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -50,6 +51,9 @@ class ProfileUIViewModel(
                 viewModelScope.launch {
                     val isLoggedIn = profileRepository.isLoggedIn()
                     _state.value = _state.value.copy(isLoggedIn = isLoggedIn)
+                    if (isLoggedIn) {
+                        loadProfiles()
+                    }
                 }
             }
 
@@ -128,7 +132,14 @@ class ProfileUIViewModel(
     private fun login(profile : ProfileUI) {
         viewModelScope.launch {
             val exists = profileRepository.checkProfile(profile.toProfile())
-            _state.value = _state.value.copy(isLoggedIn = exists, loginError = if (!exists) "Неверный логин или пароль" else null)
+            if (exists) {
+                _state.value = _state.value.copy(isLoggedIn = true, loginError = null)
+                profileRepository.setLoggedIn(true)
+
+                loadProfiles()
+            } else {
+                _state.value = _state.value.copy(isLoggedIn = false, loginError = "Неверный логин или пароль")
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.test.presentation.ui.mainactivity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -29,6 +30,8 @@ class MainActivity : ComponentActivity() {
         val app = application as MyApp
         val viewModelFactory = ProfileUIViewModelFactory(app.profileRepository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ProfileUIViewModel::class.java)
+
+        viewModel.handleIntent(ProfileUIIntent.CheckLoginStatus)
 
         setContent {
             TestTheme{
