@@ -1,4 +1,4 @@
-package com.example.test.ui.composes
+package com.example.test.presentation.ui.composes
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,12 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.test.ui.viewmodel.MainViewModel
+import com.example.test.presentation.viewmodel.ProfileUIViewModel
 
 
 @Composable
 fun RegistrationScreen(
-    mainViewModel: MainViewModel = viewModel(factory = MainViewModel.factory),
+    viewModel: ProfileUIViewModel,
     onSwitchToLogin: () -> Unit
 ) {
 
@@ -33,37 +33,37 @@ fun RegistrationScreen(
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
-        TextField(
-            value = mainViewModel.newProfileName.value,
-            onValueChange = {
-                mainViewModel.newProfileName.value = it
-            },
-            label = {
-                Text(text = "Name")
-            }
-        )
-        TextField(
-            value = mainViewModel.newProfilePassword.value,
-            onValueChange = {
-                mainViewModel.newProfilePassword.value = it
-            },
-            label = {
-                Text(text = "Password")
-            }
-        )
-        TextField(
-            value = mainViewModel.newProfileBDay.value,
-            onValueChange = {
-                mainViewModel.newProfileBDay.value = it
-            },
-            label = {
-                Text(text = "Name...")
-            }
-        )
+//        TextField(
+//            value = profileUIViewModel.newProfileName.value,
+//            onValueChange = {
+//                profileUIViewModel.newProfileName.value = it
+//            },
+//            label = {
+//                Text(text = "Name")
+//            }
+//        )
+//        TextField(
+//            value = profileUIViewModel.newProfilePassword.value,
+//            onValueChange = {
+//                profileUIViewModel.newProfilePassword.value = it
+//            },
+//            label = {
+//                Text(text = "Password")
+//            }
+//        )
+//        TextField(
+//            value = profileUIViewModel.newProfileBDay.value,
+//            onValueChange = {
+//                profileUIViewModel.newProfileBDay.value = it
+//            },
+//            label = {
+//                Text(text = "Name...")
+//            }
+//        )
         Spacer(modifier = Modifier.padding(10.dp))
         Button(
             onClick = {
-                mainViewModel.insertProfile()
+//                profileUIViewModel.insertProfile()
             }
         ) {
             Text(text = "Зарегистрироваться")

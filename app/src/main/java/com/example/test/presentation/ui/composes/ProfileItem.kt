@@ -1,4 +1,4 @@
-package com.example.test.ui.composes
+package com.example.test.presentation.ui.composes
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,12 +17,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.test.data.storage.ProfileEntity
+import com.example.test.presentation.model.ProfileUI
 
 @Composable
 fun ProfileItem(
-    profile: ProfileEntity,
-    onClick: (ProfileEntity) -> Unit
+    profile: ProfileUI,
+    onDeleteClick: (ProfileUI) -> Unit
 ){
     Card(
         modifier = Modifier
@@ -50,7 +50,7 @@ fun ProfileItem(
                 ){
                     IconButton(
                         onClick = {
-                            onClick(profile)
+                            onDeleteClick(profile)
                         }
                     ) {
                         Icon(

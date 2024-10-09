@@ -1,4 +1,4 @@
-package com.example.test.ui.composes
+package com.example.test.presentation.ui.composes
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -12,19 +12,24 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.test.ui.viewmodel.MainViewModel
+import com.example.test.presentation.intent.ProfileUIIntent
+import com.example.test.presentation.model.ProfileUI
+import com.example.test.presentation.viewmodel.ProfileUIViewModel
 
 @Composable
 fun LoginScreen(
-    mainViewModel: MainViewModel = viewModel(factory = MainViewModel.factory),
+    viewModel: ProfileUIViewModel,
     onSwitchToRegistration: () -> Unit,
     onLoginSuccess: () -> Unit
 ){
+    val state by viewModel.state.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -34,18 +39,18 @@ fun LoginScreen(
 
     ) {
         TextField(
-            value = mainViewModel.login.value,
+            value = state.login,
             onValueChange = {
-                mainViewModel.login.value = it
+                state.login = it
             },
             label = {
                 Text(text = "Login")
             }
         )
         TextField(
-            value = mainViewModel.loginPassword.value,
+            value = state.password,
             onValueChange = {
-                mainViewModel.loginPassword.value = it
+                state.password = it
             },
             label = {
                 Text(text = "Password")
@@ -54,19 +59,27 @@ fun LoginScreen(
         Spacer(modifier = Modifier.padding(10.dp))
         Button(
             onClick = {
-                mainViewModel.isProfileExists(mainViewModel.login.value, mainViewModel.loginPassword.value) { exists ->
-                    if (exists) {
-                        onLoginSuccess()
-                    } else {
-                        Log.d("LoginError", "Неверный логин или пароль")
-                    }
-                }
+                viewModel.handleIntent(ProfileUIIntent.Login(
+                    ProfileUI(
+                        id = 0,
+                        userName = state.login,
+                        userPassword =  state.password,
+                        userBDay = "")
+                    )
+                )
             }
         ) {
             Text(text = "Войти")
         }
         TextButton(onClick = onSwitchToRegistration) {
             Text(text = "Зарегистрироваться")
+        }
+        if (state.isLoggedIn) {
+            onLoginSuccess()
+        }
+
+        state.loginError?.let {
+            Text(text = it, color = Color.Red)
         }
     }
 }
