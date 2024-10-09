@@ -43,7 +43,7 @@ fun ProfileItem(
                     modifier = Modifier.padding(10.dp)
                 ){
                     Text(text = profile.userName)
-                    Text(text = profile.userBDay)
+                    Text(text = "др: " + profile.userBDay)
                 }
                 Column(
                     modifier = Modifier.padding(10.dp)

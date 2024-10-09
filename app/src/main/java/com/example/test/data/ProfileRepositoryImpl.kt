@@ -1,5 +1,6 @@
 package com.example.test.data
 
+import android.util.Log
 import com.example.test.data.mapper.toEntity
 import com.example.test.data.mapper.toProfile
 import com.example.test.data.profilepreferences.ProfilePreferences
@@ -36,5 +37,13 @@ class ProfileRepositoryImpl(
         it.map {
             it.toProfile()
         }
+    }
+
+    override suspend fun checkIfUserExists(profile: Profile): Int {
+        val str = profile.toEntity().userName
+        Log.d("MyTag", "хапрашиваю] = " + str)
+        val res = dao.checkIfUserExists(str)
+        Log.d("MyTag", "res = " + res)
+        return res
     }
 }

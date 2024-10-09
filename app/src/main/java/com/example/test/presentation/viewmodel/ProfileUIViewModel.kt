@@ -112,6 +112,11 @@ class ProfileUIViewModel(
     private fun addProfile(profileUI: ProfileUI) {
         viewModelScope.launch {
             try {
+                if (profileRepository.checkIfUserExists(profileUI.toProfile()) > 0) {
+                    updateLoginError("Имя пользователя уже существует!", Color.Red)
+                    return@launch
+                }
+
                 profileRepository.insertProfile(profileUI.toProfile())
                 loadProfiles()
                 updateLoginError("Вы успешно зарегистрировались!", Color.Green)

@@ -44,10 +44,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     if (state.isLoggedIn) {
                         ProfilesScreen(
-                            viewModel,
-                            onLogout = {
-                                viewModel.handleIntent(ProfileUIIntent.LoadProfilesUI)
-                            }
+                            viewModel
                         )
                     } else {
                         when (state.isRegistrationScreen) {

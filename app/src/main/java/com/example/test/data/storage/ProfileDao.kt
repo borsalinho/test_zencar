@@ -20,4 +20,7 @@ interface ProfileDao {
 
     @Query("select * from profile_table")
     fun getAllProfiles() : Flow<List<ProfileEntity>>
+
+    @Query("SELECT COUNT(*) FROM profile_table WHERE userName = :userName")
+    suspend fun checkIfUserExists(userName: String): Int
 }

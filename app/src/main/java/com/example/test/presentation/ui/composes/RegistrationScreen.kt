@@ -29,6 +29,8 @@ fun RegistrationScreen(
 ) {
     val state by viewModel.state.collectAsState()
 
+    val datePattern = Regex("^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-(\\d{4})$")
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -57,25 +59,35 @@ fun RegistrationScreen(
         )
         TextField(
             value = state.regBDay,
-            onValueChange = {
-                viewModel.handleIntent(ProfileUIIntent.UpdateRegBDay(it))
+            onValueChange = { newDate ->
+                viewModel.handleIntent(ProfileUIIntent.UpdateRegBDay(newDate))
+
+                if (newDate.isNotEmpty() && !datePattern.matches(newDate)) {
+                    viewModel.handleIntent(ProfileUIIntent.UpdateLoginError("Введите дату в формате дд-мм-гггг"))
+                } else {
+                    viewModel.handleIntent(ProfileUIIntent.UpdateLoginError(null))
+                }
             },
             label = {
-                Text(text = "Name...")
+                Text(text = "Bday DD-MM-YYYY")
             }
         )
         Spacer(modifier = Modifier.padding(10.dp))
         Button(
             onClick = {
-                viewModel.handleIntent(
-                    ProfileUIIntent.AddProfileEntity(
-                        ProfileUI(
-                            userName = state.regLogin,
-                            userPassword = state.regPassword,
-                            userBDay = state.regBDay
+                if (datePattern.matches(state.regBDay)) {
+                    viewModel.handleIntent(
+                        ProfileUIIntent.AddProfileEntity(
+                            ProfileUI(
+                                userName = state.regLogin,
+                                userPassword = state.regPassword,
+                                userBDay = state.regBDay
+                            )
                         )
                     )
-                )
+                } else {
+                    viewModel.handleIntent(ProfileUIIntent.UpdateLoginError("Введите корректную дату!"))
+                }
             }
         ) {
             Text(text = "Зарегистрироваться")

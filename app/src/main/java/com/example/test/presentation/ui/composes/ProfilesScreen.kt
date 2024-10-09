@@ -17,8 +17,7 @@ import com.example.test.presentation.viewmodel.ProfileUIViewModel
 
 @Composable
 fun ProfilesScreen(
-    viewModel: ProfileUIViewModel,
-    onLogout: () -> Unit
+    viewModel: ProfileUIViewModel
 ) {
     val state by viewModel.state.collectAsState()
 
