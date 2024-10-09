@@ -43,14 +43,20 @@ class ProfileUIViewModel(
             is ProfileUIIntent.Logout -> {
                 viewModelScope.launch {
                     profileRepository.setLoggedIn(false)
-                    _state.value = _state.value.copy(isLoggedIn = false)
+                    _state.value = _state.value.copy(
+                        isLoggedIn = false,
+                        loggedInUserId = -1
+                    )
                 }
             }
 
             is ProfileUIIntent.CheckLoginStatus -> {
                 viewModelScope.launch {
                     val isLoggedIn = profileRepository.isLoggedIn()
-                    _state.value = _state.value.copy(isLoggedIn = isLoggedIn)
+                    _state.value = _state.value.copy(
+                        isLoggedIn = isLoggedIn,
+
+                    )
                     if (isLoggedIn) {
                         loadProfiles()
                     }
@@ -138,7 +144,12 @@ class ProfileUIViewModel(
         viewModelScope.launch {
             val exists = profileRepository.checkProfile(profile.toProfile())
             if (exists) {
-                _state.value = _state.value.copy(isLoggedIn = true, loginError = null)
+                Log.d("MyTag","id = " + profile.id)
+                _state.value = _state.value.copy(
+                    isLoggedIn = true,
+                    loginError = null,
+                    loggedInUserId = profile.id!! // простите)))
+                )
                 profileRepository.setLoggedIn(true)
 
                 loadProfiles()

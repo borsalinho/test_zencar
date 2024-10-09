@@ -5,7 +5,7 @@ import com.example.test.domain.model.Profile
 
 fun ProfileEntity.toProfile(): Profile {
     return Profile(
-        id = this.id ?: 0,
+        id = this.id,
         userName = this.userName,
         userPassword = this.userPassword,
         userBDay = this.userBDay

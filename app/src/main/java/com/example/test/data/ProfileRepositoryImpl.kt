@@ -33,17 +33,24 @@ class ProfileRepositoryImpl(
         profilePreferences.isLoggedIn = isLoggedIn
     }
 
-    override fun getAllProfiles(): Flow<List<Profile>> = dao.getAllProfiles().map { it ->
-        it.map {
-            it.toProfile()
+//    override fun getAllProfiles(): Flow<List<Profile>> = dao.getAllProfiles().map { it ->
+//            it.map {
+//                it.toProfile()
+//            }
+//        }
+
+    override fun getAllProfiles(): Flow<List<Profile>> {
+        Log.d("Muuuuu", "loading")
+        return dao.getAllProfiles().map { profiles ->
+            val transformedProfiles = profiles.map { it.toProfile() }
+            Log.d("Muuuuu", "Profiles loaded: $transformedProfiles")
+            transformedProfiles
         }
     }
 
     override suspend fun checkIfUserExists(profile: Profile): Int {
         val str = profile.toEntity().userName
-        Log.d("MyTag", "хапрашиваю] = " + str)
         val res = dao.checkIfUserExists(str)
-        Log.d("MyTag", "res = " + res)
         return res
     }
 }

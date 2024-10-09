@@ -18,5 +18,7 @@ data class ProfileUIState (
     var regPassword: String = "",
     var regBDay: String = "",
 
-    var messageColor: Color = Color.Red
+    var messageColor: Color = Color.Red,
+
+    val loggedInUserId: Int = -1
 )
