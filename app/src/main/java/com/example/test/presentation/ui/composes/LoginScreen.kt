@@ -17,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.test.presentation.intent.ProfileUIIntent
 import com.example.test.presentation.model.ProfileUI
@@ -41,7 +42,8 @@ fun LoginScreen(
         TextField(
             value = state.login,
             onValueChange = {
-                state.login = it
+                viewModel.handleIntent(ProfileUIIntent.UpdateLogin(it))
+                viewModel.handleIntent(ProfileUIIntent.UpdateLoginError(null))
             },
             label = {
                 Text(text = "Login")
@@ -50,11 +52,13 @@ fun LoginScreen(
         TextField(
             value = state.password,
             onValueChange = {
-                state.password = it
+                viewModel.handleIntent(ProfileUIIntent.UpdatePassword(it))
+                viewModel.handleIntent(ProfileUIIntent.UpdateLoginError(null))
             },
             label = {
                 Text(text = "Password")
-            }
+            },
+            visualTransformation = PasswordVisualTransformation()
         )
         Spacer(modifier = Modifier.padding(10.dp))
         Button(

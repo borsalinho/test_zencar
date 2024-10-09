@@ -50,11 +50,15 @@ class MainActivity : ComponentActivity() {
                         when (state.isRegistrationScreen) {
                             true -> RegistrationScreen(
                                 viewModel,
-                                onSwitchToLogin = { state.isRegistrationScreen = false }
+                                onSwitchToLogin = {
+                                    viewModel.handleIntent(ProfileUIIntent.SwitchToLogin)
+                                }
                             )
                             false -> LoginScreen(
                                 viewModel,
-                                onSwitchToRegistration = { state.isRegistrationScreen = true },
+                                onSwitchToRegistration = {
+                                    viewModel.handleIntent(ProfileUIIntent.SwitchToRegistration)
+                                },
                                 onLoginSuccess = {
                                     viewModel.handleIntent(ProfileUIIntent.LoadProfilesUI)
                                 }
