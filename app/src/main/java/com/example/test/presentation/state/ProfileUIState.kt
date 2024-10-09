@@ -1,5 +1,6 @@
 package com.example.test.presentation.state
 
+import androidx.compose.ui.graphics.Color
 import com.example.test.presentation.model.ProfileUI
 
 data class ProfileUIState (
@@ -11,5 +12,11 @@ data class ProfileUIState (
     var isRegistrationScreen: Boolean = false,
 
     var login: String = "",
-    var password: String = ""
+    var password: String = "",
+
+    var regLogin: String = "",
+    var regPassword: String = "",
+    var regBDay: String = "",
+
+    var messageColor: Color = Color.Red
 )

@@ -15,4 +15,9 @@ sealed class ProfileUIIntent {
     data class UpdateLogin(val login: String) : ProfileUIIntent()
     data class UpdatePassword(val password: String) : ProfileUIIntent()
     data class UpdateLoginError(val error: String?) : ProfileUIIntent()
+    data class UpdateRegLogin(val regLogin: String) : ProfileUIIntent()
+    data class UpdateRegPassword(val regPassword: String) : ProfileUIIntent()
+    data class UpdateRegBDay(val regBday: String) : ProfileUIIntent()
+
+
 }

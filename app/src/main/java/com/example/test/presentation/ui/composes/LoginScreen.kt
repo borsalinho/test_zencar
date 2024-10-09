@@ -83,7 +83,7 @@ fun LoginScreen(
         }
 
         state.loginError?.let {
-            Text(text = it, color = Color.Red)
+            Text(text = it, color = state.messageColor)
         }
     }
 }

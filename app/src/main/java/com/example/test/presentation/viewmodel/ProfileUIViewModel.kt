@@ -1,5 +1,6 @@
 package com.example.test.presentation.viewmodel
 
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.test.data.ProfileRepositoryImpl
@@ -53,11 +54,19 @@ class ProfileUIViewModel(
             }
 
             is ProfileUIIntent.SwitchToRegistration -> {
-                _state.value = _state.value.copy(isRegistrationScreen = true)
+                _state.value = _state.value.copy(
+                    isRegistrationScreen = true,
+                    loginError = null,
+                    messageColor = Color.Red // костыль наше все
+                )
             }
 
             is ProfileUIIntent.SwitchToLogin -> {
-                _state.value = _state.value.copy(isRegistrationScreen = false)
+                _state.value = _state.value.copy(
+                    isRegistrationScreen = false,
+                    loginError = null,
+                    messageColor = Color.Red
+                )
             }
 
             is ProfileUIIntent.UpdateLogin -> {
@@ -70,6 +79,16 @@ class ProfileUIViewModel(
 
             is ProfileUIIntent.UpdateLoginError -> {
                 _state.value = _state.value.copy(loginError = intent.error)
+            }
+
+            is ProfileUIIntent.UpdateRegBDay -> {
+                _state.value = _state.value.copy(regBDay = intent.regBday)
+            }
+            is ProfileUIIntent.UpdateRegLogin -> {
+                _state.value = _state.value.copy(regLogin = intent.regLogin)
+            }
+            is ProfileUIIntent.UpdateRegPassword -> {
+                _state.value = _state.value.copy(regPassword = intent.regPassword)
             }
         }
     }
@@ -88,8 +107,14 @@ class ProfileUIViewModel(
 
     private fun addProfile(profileUI: ProfileUI) {
         viewModelScope.launch {
-            profileRepository.insertProfile(profileUI.toProfile())
-            loadProfiles()
+            try {
+                profileRepository.insertProfile(profileUI.toProfile())
+                loadProfiles()
+                updateLoginError("Вы успешно зарегистрировались!", Color.Green)
+            } catch (e: Exception) {
+                updateLoginError("Ошибка при регистрации: ${e.message}",  Color.Red)
+            }
+
         }
     }
 
@@ -107,7 +132,7 @@ class ProfileUIViewModel(
         }
     }
 
-    private fun updateLoginError(error: String?) {
-        _state.value = _state.value.copy(loginError = error)
+    private fun updateLoginError(error: String?, color: Color) {
+        _state.value = _state.value.copy(loginError = error, messageColor = color)
     }
 }
