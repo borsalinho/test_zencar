@@ -49,7 +49,7 @@ fun ProfilesScreen(
                         onDeleteClick = {
                             viewModel.handleIntent(ProfileUIIntent.DeleteProfileEntity(profile))
                         },
-                        isDeleteEnabled = profile.id!! <= state.loggedInUserId,
+                        isDeleteEnabled = profile.id!! > state.loggedInUserId,
                         isHighlighted = profile.id == state.loggedInUserId
                     )
                 }

@@ -11,4 +11,7 @@ interface ProfileRepository {
     suspend fun setLoggedIn(isLoggedIn: Boolean)
     fun getAllProfiles(): Flow<List<Profile>>
     suspend fun checkIfUserExists(profile: Profile): Int
+    suspend fun getProfie(profile: Profile) : Profile
+    suspend fun setLoggedInUserId(userId: Int)
+    suspend fun getLoggedInUserId() :Int
 }

@@ -65,7 +65,6 @@ fun LoginScreen(
             onClick = {
                 viewModel.handleIntent(ProfileUIIntent.Login(
                     ProfileUI(
-                        id = 0,
                         userName = state.login,
                         userPassword =  state.password,
                         userBDay = "")

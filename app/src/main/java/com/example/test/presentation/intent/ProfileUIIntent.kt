@@ -19,5 +19,4 @@ sealed class ProfileUIIntent {
     data class UpdateRegPassword(val regPassword: String) : ProfileUIIntent()
     data class UpdateRegBDay(val regBday: String) : ProfileUIIntent()
 
-
 }

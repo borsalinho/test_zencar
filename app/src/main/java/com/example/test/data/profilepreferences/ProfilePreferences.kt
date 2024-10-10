@@ -11,4 +11,10 @@ class ProfilePreferences(context: Context) {
         set(value) {
             prefs.edit().putBoolean("is_logged_in", value).apply()
         }
+
+    var loggedInUserId: Int
+        get() = prefs.getInt("logged_in_user_id", -1)
+        set(value) {
+            prefs.edit().putInt("logged_in_user_id", value).apply()
+        }
 }

@@ -1,6 +1,6 @@
 package com.example.test.data
 
-import android.util.Log
+
 import com.example.test.data.mapper.toEntity
 import com.example.test.data.mapper.toProfile
 import com.example.test.data.profilepreferences.ProfilePreferences
@@ -15,42 +15,40 @@ class ProfileRepositoryImpl(
     private val profilePreferences: ProfilePreferences
 ) : ProfileRepository {
 
-    override suspend fun insertProfile(profile: Profile) = dao.insertProfile(profile.toEntity())
+    override suspend fun insertProfile(profile: Profile) =
+        dao.insertProfile(profile.toEntity())
 
-    override suspend fun deleteProfile(profile: Profile) = dao.deleteProfile(profile.toEntity())
+    override suspend fun deleteProfile(profile: Profile) =
+        dao.deleteProfile(profile.toEntity())
 
-    override suspend fun checkProfile(profile: Profile): Boolean {
-        val userName = profile.toEntity().userName
-        val userPassword = profile.toEntity().userPassword
-        return dao.checkProfile(userName, userPassword)
-    }
+    override suspend fun checkProfile(profile: Profile): Boolean =
+        dao.checkProfile(profile.toEntity().userName)
 
-    override suspend fun isLoggedIn(): Boolean {
-        return profilePreferences.isLoggedIn
-    }
+    override suspend fun isLoggedIn(): Boolean =
+        profilePreferences.isLoggedIn
 
     override suspend fun setLoggedIn(isLoggedIn: Boolean) {
         profilePreferences.isLoggedIn = isLoggedIn
     }
 
-//    override fun getAllProfiles(): Flow<List<Profile>> = dao.getAllProfiles().map { it ->
-//            it.map {
-//                it.toProfile()
-//            }
-//        }
+    override suspend fun setLoggedInUserId(userId: Int) {
+        profilePreferences.loggedInUserId = userId
+    }
 
-    override fun getAllProfiles(): Flow<List<Profile>> {
-        Log.d("Muuuuu", "loading")
-        return dao.getAllProfiles().map { profiles ->
-            val transformedProfiles = profiles.map { it.toProfile() }
-            Log.d("Muuuuu", "Profiles loaded: $transformedProfiles")
-            transformedProfiles
+    override suspend fun getLoggedInUserId(): Int {
+        return profilePreferences.loggedInUserId
+    }
+
+    override fun getAllProfiles(): Flow<List<Profile>> = dao.getAllProfiles().map { it ->
+            it.map {
+                it.toProfile()
+            }
         }
-    }
 
-    override suspend fun checkIfUserExists(profile: Profile): Int {
-        val str = profile.toEntity().userName
-        val res = dao.checkIfUserExists(str)
-        return res
-    }
+    override suspend fun checkIfUserExists(profile: Profile): Int =
+        dao.checkIfUserExists(profile.toEntity().userName)
+
+    override suspend fun getProfie(profile: Profile): Profile =
+        dao.getProfile(profile.toEntity().userName).toProfile()
+
 }

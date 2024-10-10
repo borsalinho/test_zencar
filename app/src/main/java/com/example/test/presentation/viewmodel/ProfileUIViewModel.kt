@@ -53,9 +53,11 @@ class ProfileUIViewModel(
             is ProfileUIIntent.CheckLoginStatus -> {
                 viewModelScope.launch {
                     val isLoggedIn = profileRepository.isLoggedIn()
+                    val loggedInUserId = profileRepository.getLoggedInUserId()
+
                     _state.value = _state.value.copy(
                         isLoggedIn = isLoggedIn,
-
+                        loggedInUserId = loggedInUserId
                     )
                     if (isLoggedIn) {
                         loadProfiles()
@@ -144,15 +146,17 @@ class ProfileUIViewModel(
         viewModelScope.launch {
             val exists = profileRepository.checkProfile(profile.toProfile())
             if (exists) {
-                Log.d("MyTag","id = " + profile.id)
-                _state.value = _state.value.copy(
-                    isLoggedIn = true,
-                    loginError = null,
-                    loggedInUserId = profile.id!! // простите)))
-                )
-                profileRepository.setLoggedIn(true)
+                val profileFromDB = profileRepository.getProfie(profile.toProfile())
 
-                loadProfiles()
+                    _state.value = _state.value.copy(
+                        isLoggedIn = true,
+                        loginError = null,
+                        loggedInUserId = profileFromDB.id!! // простите)))
+                    )
+                    profileRepository.setLoggedIn(true)
+                    profileRepository.setLoggedInUserId(profileFromDB.id!!)
+                    loadProfiles()
+
             } else {
                 _state.value = _state.value.copy(isLoggedIn = false, loginError = "Неверный логин или пароль")
             }
